@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo do Pedido - Quentinhas do Grau</title>
+    <script src="pedido.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Resumo do Pedido</h1>
+    </header>
+
+    <main>
+        <h2>Itens Selecionados</h2>
+        <ul id="pedido-itens"></ul>
+        <h3 id="total">Total: R$ 0,00</h3>
+        <button onclick="window.location.href='index.html'">Fazer Novo Pedido</button>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Quentinhas do Grau. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const orderDetails = JSON.parse(localStorage.getItem('orderDetails'));
+            const pedidoItens = document.getElementById("pedido-itens");
+            const totalElement = document.getElementById("total");
+            let total = 0;
+
+            if (orderDetails && orderDetails.length > 0) {
+                orderDetails.forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent = `${item.name} - R$ ${item.price.toFixed(2)}`;
+                    pedidoItens.appendChild(li);
+                    total += item.price;
+                });
+            }
+
+            totalElement.textContent = `Total: R$ ${total.toFixed(2)}`;
+        });
+    </script>
+</body>
+</html>
